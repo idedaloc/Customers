@@ -22,17 +22,39 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 	 
-	@GetMapping
-	public ResponseEntity<CustomerListDTO> getAllCategories(){
+	@GetMapping()
+	public ResponseEntity<CustomerListDTO> getAllCustomers(){
 		return new ResponseEntity<CustomerListDTO>(
 				new CustomerListDTO(customerService.getAllCustomer()), HttpStatus.OK);
 	}
 	
+//	@GetMapping("/api/v1/customer/")
+//	public ResponseEntity<CustomerListDTO> getAllCustomers(){
+//		CustomerListDTO customers = new CustomerListDTO(customerService.getAllCustomer());
+//		Resource<CustomerListDTO> res = new Resource<CustomerListDTO>(customers);
+//		
+//		return res;
+//	}
+	
 	@GetMapping("{id}")
-	public ResponseEntity<CustomerDTO> getCustomerByName(@PathVariable Long id){
+	public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id){
 		return new ResponseEntity<CustomerDTO>(
-				customerService.getCostumerById(id), HttpStatus.OK);
+				customerService.getCostumerById(id),HttpStatus.OK);
 	}
 
+//	@GetMapping("/api/v1/customer/{id}")
+//	public Resource<CustomerDTO> getCustomerById(@PathVariable Long id){
+//		CustomerDTO customer = customerService.getCostumerById(id);
+//		
+//		Resource<CustomerDTO> res = new Resource<CustomerDTO>(customer);
+//		
+//		ControllerLinkBuilder lingTo = ControllerLinkBuilder.linkTo(
+//				ControllerLinkBuilder.methodOn(this.getClass()).getAllCustomers());
+//
+//		res.add(lingTo.withRel("all-users"));
+//
+//		return res;
+//
+//	}
 
 }

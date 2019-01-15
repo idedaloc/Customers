@@ -4,16 +4,23 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.rest.domain.Category;
+import com.rest.domain.Customer;
 import com.rest.repositories.CategoryRepository;
+import com.rest.repositories.CustomerRepository;
 
 @Component
 public class Bootstrap implements CommandLineRunner{
 	
 	private CategoryRepository categoryRepository;
+	private CustomerRepository customerRepository;
 
-	public Bootstrap(CategoryRepository categoryRepository) {
+	public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+		super();
 		this.categoryRepository = categoryRepository;
+		this.customerRepository = customerRepository;
 	}
+
+
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -33,6 +40,12 @@ public class Bootstrap implements CommandLineRunner{
 	        Category nuts = new Category();
 	        nuts.setName("Nuts");
 
+	        Customer customer = new Customer();
+	        customer.setFirstName("L");
+	        customer.setLastName("L");
+	        
+	        customerRepository.save(customer);
+	        
 	        categoryRepository.save(fruits);
 	        categoryRepository.save(dried);
 	        categoryRepository.save(fresh);
