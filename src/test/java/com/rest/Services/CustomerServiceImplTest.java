@@ -3,8 +3,11 @@
  */
 package com.rest.Services;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -84,4 +87,59 @@ public class CustomerServiceImplTest {
 	        assertEquals(LAST_NAME, customerDTO.getLastName());
 
 	}
+	    
+	    @Test
+	    public void createNewCustomer() throws Exception {
+
+	        //given
+	        CustomerDTO customerDTO = new CustomerDTO();
+	        customerDTO.setFirstName("Jim");
+
+	        Customer savedCustomer = new Customer();
+	        savedCustomer.setFirstName(customerDTO.getFirstName());
+	        savedCustomer.setFirstName(customerDTO.getFirstName());
+	        savedCustomer.setId(1l);
+
+	        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+
+	        //when
+	        CustomerDTO savedDto = customerService.createNewCustomer(customerDTO);
+
+	        //then
+	        assertEquals(customerDTO.getFirstName(), savedDto.getFirstName());
+	        assertEquals("/api/v1/customer/1", savedDto.getUrl());
+	}
+	    
+	    @Test
+	    public void updatedCustomer() throws Exception{
+	    	
+	    	//given
+	    	CustomerDTO customerDTO = new CustomerDTO();
+	        customerDTO.setFirstName("Jim");
+
+	        Customer savedCustomer = new Customer();
+	        savedCustomer.setFirstName(customerDTO.getFirstName());
+	        savedCustomer.setLastName(customerDTO.getLastName());
+	        savedCustomer.setId(1l);
+	        
+	        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+	        
+	        //when
+	        CustomerDTO savedCustomerDTO = customerService.updateNewCustomer(1l,customerDTO);	
+	        
+	        //then	        
+	        assertEquals(customerDTO.getFirstName(), savedCustomerDTO.getFirstName());
+	        assertEquals("/api/v1/customer/1", savedCustomerDTO.getUrl());	        
+	        
+	    }
+	    
+	    @Test
+	    public void deleteCustomerById() throws Exception {
+	    	Long id = 1L;
+	    	
+	    	customerService.deleteCustomerById(id);
+	    	
+	    	verify(customerRepository, times(1)).deleteById(anyLong());
+	    }
+	
 }

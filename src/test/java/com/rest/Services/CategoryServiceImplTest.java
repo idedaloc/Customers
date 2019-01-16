@@ -22,6 +22,7 @@ import com.rest.api.v1.mapper.CategoryMapper;
 import com.rest.api.v1.model.CategoryDTO;
 import com.rest.domain.Category;
 import com.rest.repositories.CategoryRepository;
+import com.rest.repositories.CustomerRepository;
 
 /**
  * @author dedaloc2
@@ -82,4 +83,5 @@ public class CategoryServiceImplTest {
 	        assertEquals(NAME, categoryDTO.getName());
 
 	}
+	    	    	    
 }
